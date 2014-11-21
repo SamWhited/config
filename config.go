@@ -34,9 +34,9 @@ func LoadFile(path string) error {
 // handle them.
 func LoadProjectConfig(project string) {
 	// Load system-level config
-	err := LoadFile("/etc/" + ProjectName + "/config")
+	err := LoadFile("/etc/" + project + "/config")
 	if err != nil {
-		logger.Info("No config found at `/etc/" + ProjectName + "/config'.")
+		logger.Info("No config found at `/etc/" + project + "/config'.")
 	}
 
 	// Load user-level config
@@ -44,9 +44,9 @@ func LoadProjectConfig(project string) {
 	if err != nil {
 		logger.Info("No home directory for current user; not loading user-level config")
 	} else {
-		err = LoadFile(home + "/.config/" + ProjectName + "/config")
+		err = LoadFile(home + "/.config/" + project + "/config")
 		if err != nil {
-			logger.Info("No config found at `" + home + "/.config/" + ProjectName + "/config'.")
+			logger.Info("No config found at `" + home + "/.config/" + project + "/config'.")
 		}
 	}
 
