@@ -7,22 +7,12 @@ import (
 	"github.com/mitchellh/go-homedir"
 )
 
-var (
-	C             map[string]interface{}
-	DefaultConfig string
-	ProjectName   string
-)
+var C map[string]interface{}
 
-// Initializes the config map if it hasn't already been initialized before package load.
+// Initializes the config map if it hasn't been already.
 func init() {
 	if C == nil {
 		C = make(map[string]interface{})
-	}
-	if DefaultConfig != "" {
-		LoadBlob(DefaultConfig)
-	}
-	if ProjectName != "" {
-		LoadProjectConfig(ProjectName)
 	}
 }
 
