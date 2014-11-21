@@ -18,22 +18,24 @@ func init() {
 	if C == nil {
 		C = make(map[string]interface{})
 	}
-	if DefaultConfig != nil && DefaultConfig != "" {
+	if DefaultConfig != "" {
 		LoadBlob(DefaultConfig)
 	}
-	if ProjectName != nil && ProjectName != "" {
+	if ProjectName != "" {
 		LoadProjectConfig(ProjectName)
 	}
 }
 
 // Loads a TOML blob into the config map provided by the package.
-func LoadBlob(blob string) (err error) {
-	_, err = toml.Decode(blob, C)
+func LoadBlob(blob string) error {
+	_, err := toml.Decode(blob, C)
+	return err
 }
 
 // Loads a TOML file into the config map provided by the package.
-func LoadFile(path string) (err error) {
-	_, err = toml.DecodeFile(path, C)
+func LoadFile(path string) error {
+	_, err := toml.DecodeFile(path, C)
+	return err
 }
 
 // Loads an entire project's config (system level, user level, and local config) into the map provided by the package.
@@ -42,9 +44,9 @@ func LoadFile(path string) (err error) {
 // handle them.
 func LoadProjectConfig(project string) {
 	// Load system-level config
-	err := LoadFile("/etc/" + projectName + "/config")
+	err := LoadFile("/etc/" + ProjectName + "/config")
 	if err != nil {
-		logger.Info("No config found at `/etc/" + projectName + "/config'.")
+		logger.Info("No config found at `/etc/" + ProjectName + "/config'.")
 	}
 
 	// Load user-level config
@@ -52,9 +54,9 @@ func LoadProjectConfig(project string) {
 	if err != nil {
 		logger.Info("No home directory for current user; not loading user-level config")
 	} else {
-		err = LoadFile(home + "/.config/" + projectName + "/config")
+		err = LoadFile(home + "/.config/" + ProjectName + "/config")
 		if err != nil {
-			logger.Info("No config found at `" + home + "/.config/" + projectName + "/config'.")
+			logger.Info("No config found at `" + home + "/.config/" + ProjectName + "/config'.")
 		}
 	}
 
