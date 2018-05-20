@@ -1,5 +1,5 @@
-// Package
-package config
+// Package config is a deprecated config loader.
+package config // import notimportable/config
 
 import (
 	"github.com/BurntSushi/toml"
